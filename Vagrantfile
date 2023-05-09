@@ -60,6 +60,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "server-1" do |dockerserver|
     dockerserver.vm.network "private_network", ip: '192.168.56.60'
     dockerserver.vm.hostname = "dockerserver"
+  end
   #
   # View the documentation for the provider you are using for more
   # information on available options.
