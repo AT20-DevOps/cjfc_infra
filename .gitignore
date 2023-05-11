@@ -1,5 +1,2 @@
 /*.log
 /.vagrant
-/AT20_COMPILER_SERVICE
-/docker-compose.yml
-/.env
