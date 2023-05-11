@@ -1,3 +1,7 @@
+$script = <<-SCRIPT
+docker compose up
+SCRIPT
+
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -13,21 +17,18 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision :docker
   config.vm.provision :docker_compose
-  config.vm.provision :shell, path: "bootstrap.sh"
-  config.vm.provision :file, source: "newFile", destination: "newfile"
-  config.vm.provision :file, source: "html", destination: "HTMLDIR"
-  
-  config.vm.define "server-1" do |dockerserver1|
-    dockerserver1.vm.network "private_network", ip: '192.168.56.60'
-    dockerserver1.vm.hostname = "ci-server"
+
+  config.vm.define "ci-server" do |ciserver|
+    ciserver.vm.network "private_network", ip: '192.168.56.60'
+    ciserver.vm.hostname = "ci-server"
   end
 
   config.vm.define "server-2" do |dockerserver2|
-    dockerserver2.vm.network "private_network", ip: '192.168.56.60'
+    dockerserver2.vm.network "private_network", ip: '192.168.56.61'
     dockerserver2.vm.hostname = "server-2"
-    dockerserver2.vm.provision :shell, inline: "echo Hi Class from Shell inline"
-    dockerserver2.vm.provision "docker" do |d|
-      d.build_dir = "./AT20_COMPILER_SERVICE"
-    end
+    dockerserver2.vm.provision :file, source: "AT20_COMPILER_SERVICE", destination: "AT20_COMPILER_SERVICE"
+    dockerserver2.vm.provision :file, source: "docker-compose.yml", destination: "docker-compose.yml"
+    dockerserver2.vm.provision :file, source: ".env", destination: ".env"
+    dockerserver2.vm.provision "shell", inline: $script
   end
 end
