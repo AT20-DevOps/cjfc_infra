@@ -1,5 +1,5 @@
 $script = <<-SCRIPT
-docker compose up
+docker compose up -d
 SCRIPT
 
 # -*- mode: ruby -*-
