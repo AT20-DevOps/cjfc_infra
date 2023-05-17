@@ -1,7 +1,3 @@
-$script = <<-SCRIPT
-docker compose up -d
-SCRIPT
-
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -23,12 +19,12 @@ Vagrant.configure("2") do |config|
     ciserver.vm.hostname = "ci-server"
   end
 
-  config.vm.define "server-2" do |dockerserver2|
-    dockerserver2.vm.network "private_network", ip: '192.168.56.61'
-    dockerserver2.vm.hostname = "server-2"
-    dockerserver2.vm.provision :file, source: "AT20_COMPILER_SERVICE", destination: "AT20_COMPILER_SERVICE"
+  config.vm.define "server-3" do |dockerserver2|
+    dockerserver2.vm.network "private_network", ip: '192.168.56.62'
+    dockerserver2.vm.hostname = "server-3"
+    dockerserver2.vm.provision :file, source: "AT20_COMPILER_SERVICES", destination: "AT20_COMPILER_SERVICES"
     dockerserver2.vm.provision :file, source: "docker-compose.yml", destination: "docker-compose.yml"
     dockerserver2.vm.provision :file, source: ".env", destination: ".env"
-    dockerserver2.vm.provision "shell", inline: $script
+    dockerserver2.vm.provision "shell", inline: "docker compose up -d"
   end
 end
