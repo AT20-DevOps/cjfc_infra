@@ -12,7 +12,7 @@ services:
       - go_server:/home/go
 
   gocd_agent_ubuntu:
-    image: charlesfc001/gocd-agent-ubuntu-20.04-node-java11-csharp:v22.2.0
+    image: charlesfc001/gocd-agent-ubuntu-20.04-compilers-sonar:v22.2.0
     # image: gocd/gocd-agent-ubuntu-20.04:v22.2.0
     container_name: gocd_agent_ubuntu
     restart: always
@@ -23,6 +23,7 @@ services:
       # - AGENT_AUTO_REGISTER_KEY=
       - AGENT_AUTO_REGISTER_RESOURCES=ubuntu
       - AGENT_AUTO_REGISTER_HOSTNAME=gocd_agent_ubuntu
+    command: /bin/bash -c "export SONAR_SCANNER_VERSION=4.7.0.2747 && export SONAR_SCANNER_HOME=/godata/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux && PATH=$SONAR_SCANNER_HOME/bin:$PATH && SONAR_SCANNER_OPTS='-server'"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
