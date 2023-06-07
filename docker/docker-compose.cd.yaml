@@ -22,8 +22,7 @@ services:
       - GO_SERVER_URL=http://gocd_server:8153/go
       # - AGENT_AUTO_REGISTER_KEY=
       - AGENT_AUTO_REGISTER_RESOURCES=ubuntu
-      - AGENT_AUTO_REGISTER_HOSTNAME=gocd_agent_ubuntu
-    command: /bin/bash -c "export SONAR_SCANNER_VERSION=4.7.0.2747 && export SONAR_SCANNER_HOME=/godata/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux && export PATH=$SONAR_SCANNER_HOME/bin:$PATH && export SONAR_SCANNER_OPTS='-server'"
+      - AGENT_AUTO_REGISTER_HOSTNAME=gocd_agent_ubuntu    
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
