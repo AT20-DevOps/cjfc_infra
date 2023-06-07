@@ -12,14 +12,15 @@ services:
       - go_server:/home/go
 
   gocd_agent_ubuntu:
-    image: gocd/gocd-agent-ubuntu-20.04:v22.2.0
+    image: charlesfc001/gocd-agent-ubuntu-20.04-node-java11-csharp:v22.2.0
+    # image: gocd/gocd-agent-ubuntu-20.04:v22.2.0
     container_name: gocd_agent_ubuntu
     restart: always
     depends_on:
       - gocd_server
     environment:
       - GO_SERVER_URL=http://gocd_server:8153/go
-      - AGENT_AUTO_REGISTER_KEY=6d804556-a41c-4f16-ab49-97b4cc5c4f19
+      # - AGENT_AUTO_REGISTER_KEY=
       - AGENT_AUTO_REGISTER_RESOURCES=ubuntu
       - AGENT_AUTO_REGISTER_HOSTNAME=gocd_agent_ubuntu
     volumes:
@@ -33,7 +34,7 @@ services:
       - gocd_server
     environment:
       - GO_SERVER_URL=http://gocd_server:8153/go
-      - AGENT_AUTO_REGISTER_KEY=6d804556-a41c-4f16-ab49-97b4cc5c4f19
+      # - AGENT_AUTO_REGISTER_KEY=
       - AGENT_AUTO_REGISTER_RESOURCES=docker
       - AGENT_AUTO_REGISTER_HOSTNAME=gocd_agent_docker
     volumes:
@@ -47,7 +48,7 @@ services:
       - gocd_server
     environment:
       - GO_SERVER_URL=http://gocd_server:8153/go
-      - AGENT_AUTO_REGISTER_KEY=6d804556-a41c-4f16-ab49-97b4cc5c4f19
+      # - AGENT_AUTO_REGISTER_KEY=
       - AGENT_AUTO_REGISTER_RESOURCES=python
       - AGENT_AUTO_REGISTER_HOSTNAME=gocd_agent_python
     volumes:
