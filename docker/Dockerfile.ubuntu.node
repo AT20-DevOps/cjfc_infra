@@ -1,7 +1,7 @@
 FROM gocd/gocd-agent-ubuntu-20.04:v22.2.0
 USER root
 RUN apt-get -y update && \
-    DEBIAN_FRONTEND=noninteractive TZ="America/La_Paz" apt-get install -y openjdk-11-jdk && \
+    DEBIAN_FRONTEND=noninteractive TZ="America/La_Paz" apt-get install -y openjdk-11-jdk-headless && \
     apt-get install -y curl && \
     curl -sL https://deb.nodesource.com/setup_18.x | bash && \
     apt-get install -y nodejs && \
@@ -16,6 +16,7 @@ RUN apt-get -y update && \
     export SONAR_SCANNER_HOME=/godata/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux && \
     curl --create-dirs -sSLo /godata/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip && \
     unzip -o /godata/.sonar/sonar-scanner.zip -d /godata/.sonar/ && \
+    rm -rf /godata/.sonar/sonar-scanner.zip && \
     export PATH=$SONAR_SCANNER_HOME/bin:$PATH && \
     export SONAR_SCANNER_OPTS="-server"
 USER go 
