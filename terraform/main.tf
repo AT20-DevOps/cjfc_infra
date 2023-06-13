@@ -16,8 +16,27 @@ resource "virtualbox_vm" "node" {
     user_data = ""
 
     network_adapter {
-        type = "hostonly"
-        host_interface = "vboxnet0"
+        type = "bridged"
+        host_interface = "enp2s0"
+    }
+
+    connection {
+        type = "ssh"
+        host = element(virtualbox_vm.node.*.network_adapter.0.ipv4_address,1)
+        user = "vagrant"
+        private_key = file("vagrant")
+    }
+
+    provisioner "file" {
+        source = "../scripts/install_docker.sh"
+        destination = "/tmp/install_docker.sh"
+    }
+
+    provisioner "remote-exec" {
+        inline = [ 
+            "chmod +x /tmp/install_docker.sh",
+            "/tmp/install_docker.sh"
+        ]
     }
 }
 
